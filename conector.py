@@ -25,5 +25,5 @@ class DataBase:
         except Error as e:
             print(e)
 
-db = DataBase(input(),getpass())
-db.conectar()
+#db = DataBase(input("Ingrese nombre "),getpass("Ingrese Password "))
+#db.conectar()

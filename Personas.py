@@ -14,4 +14,6 @@ class Personas:
 
     def rut(self):
         return self.rut
-
+    
+    def descripcion(self):
+        print("ID: ", self.id, "Nombre: ", self.nombrecompleto, "RUT: ", self.rut)
