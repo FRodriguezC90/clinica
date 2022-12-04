@@ -12,6 +12,8 @@ pc3=Pacientes('2fernando','fernando123', 3,'Fernando Marquez Letelier', 14776972
 pc4=Pacientes('2nicolas','nicolas123', 4,'Nicolas Ferrada Zabaleta', 16443567-8)
 pc5=Pacientes('2tomas','tomas123', 5,'Tomas Ovalle Elgueta', 14112345-8)
 
+print(pc1)
+
 #5 Cuentas de perfil Profesional
 pr1=Profesional('1andrea','andrea123', 6,'Andrea Pizarro Galvez', 19887654-6)
 pr2=Profesional('2carla','carla123', 7,'Carla Aedo Vielma', 15332882-5)

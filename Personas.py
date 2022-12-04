@@ -17,3 +17,7 @@ class Personas:
     
     def descripcion(self):
         print("ID: ", self.id, "Nombre: ", self.nombrecompleto, "RUT: ", self.rut)
+        
+p1 = Personas(1, "camd", 180211)
+
+print(p1)
