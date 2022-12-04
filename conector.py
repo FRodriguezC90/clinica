@@ -12,8 +12,8 @@ class DataBase:
         try:
             with connect(
                 host="localhost",
-                user=self.user,
-                password=self.password,
+                user="root",
+                password="asdf",
                 database="mydb"
             ) as connection:
                 print(connection)

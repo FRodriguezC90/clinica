@@ -23,14 +23,13 @@ log = input("Ingrese usuario: ")
 pwd = getpass("Ingrese su contraseña: ")
 
 if log.startswith("1"):
-
         while True:
             print('''
             ===== Menu de opciones (Medico)=====
             1. Listar Pacientes
             2. Listar Agendas
-            3. Añadir Paciente
-            4. Modificar Agenda
+            3. Añadir Usuario/Profesional
+            4. Agendar Paciente
             0. Salir    
                 ''')
             op = input('Ingrese seleccion:\n')
@@ -49,8 +48,8 @@ if log.startswith("1"):
                         select = ('SELECT a.Per_id, a.Per_nombrecompleto, a.Per_rut, p.Pac_usuario, p.Pac_clave FROM personas a JOIN pacientes p ON (a.Per_id = p.Pac_id)')
                         with connection.cursor() as cursor:
                             cursor.execute(select)
+                            print("//ID//Nombres//////////////RUT//////Usuario//////Clave")
                             for row in cursor.fetchall():
-                                print("ID - Nombres - RUT - Usuario - Clave")
                                 print(row)
                 except Error as e:
                                 print(e)
@@ -66,11 +65,11 @@ if log.startswith("1"):
                         database="mydb"
                     ) as connection:
                         print(connection)
-                        select = ('SELECT a.Agend_id, m.Medicos_usuario, a.Agend_paciente, a.Agend_fecha, a.Agend_hora FROM agendas a NATURAL JOIN medicos m')
+                        select = ('SELECT * from agendas')
                         with connection.cursor() as cursor:
                             cursor.execute(select)
+                            print("//ID///Especialista////Paciente/////////Fecha//////Hora")
                             for row in cursor.fetchall():
-                                print("ID - Nombres - RUT - Usuario - Clave")
                                 print(row)
                 except Error as e:
                                 print(e)
@@ -78,11 +77,12 @@ if log.startswith("1"):
             elif op == '3':
                 print("========Añadir Pacientes========")
                 input('Presione enter para continuar...')
-                newname=input("ingrese Nombre Completo de Paciente")
-                id=11
-                rut=int(input("Ingrese Rut"))
-                user=input("Ingrese nuevo usuario")
-                psw=input("Ingrese nueva contraseña")
+                newname=input("ingrese Nombre Completo de Paciente: ")
+                idp= 100
+                idpc= 100
+                rut=(input("Ingrese Rut (sin puntos): "))
+                user2=input("Ingrese nuevo usuario: ")
+                psw=input("Ingrese nueva contraseña: ")
                 try:
                     with connect(
                         host="localhost",
@@ -91,36 +91,157 @@ if log.startswith("1"):
                         database="mydb"
                     ) as connection:
                         print(connection)
-                        select = (f'INSERT into pacientes (Pac_id, Pac_usuario, Pac_clave) VALUES ({id}, {user}, {psw})')
+                        persona = (f"INSERT into personas(Per_id, Per_nombrecompleto, Per_rut) VALUES ({idp},'{newname}','{rut}');")
+                        select = (f"INSERT into pacientes(Pac_id, Pac_usuario, Pac_clave) VALUES ({idpc},'{user2}','{psw}');")
                         with connection.cursor() as cursor:
                             cursor.execute(select)
-                            for row in cursor.fetchall():
-                                print("Ingreso de paciente correcto")
-                                print(row)
+                            connection.commit()
+                            cursor.execute(persona)
+                            connection.commit()
+                            cursor.close()
+                            connection.close()
+                            input("Paciente creado correctamente.. pulse Enter para continuar...")                         
+                            idp= idp+1
+                            idpc= idpc+1
                 except Error as e:
-                                print(e)
-                                break 
+                        print(e) 
             elif op == '4':
-                print("=======Modificar Agendas========")
-                input('Presione enter para continuar...')
+                print("=======Agendar Paciente========")
+                input('Presione enter para continuar...'),
+                id = 20
+                prof=input("ingrese Nombre de Especialista: ")
+                npac=(input("Ingrese Nombre de Paciente: "))
+                date=input("Ingrese la fecha: ")
+                hora=input("Ingrese la hora: ")
+                try:
+                    with connect(
+                        host="localhost",
+                        user="root",
+                        password="asdf",
+                        database="mydb"
+                    ) as connection:
+                        print(connection)
+                        agenda = (f"INSERT into agendas (Agend_id, Agend_especialista, Agend_paciente, Agend_fecha, Agend_hora) VALUES ({id},'{prof}','{npac}','{date}','{hora}');")
+                        with connection.cursor() as cursor:
+                            cursor.execute(agenda)
+                            connection.commit()
+                            cursor.close()
+                            connection.close()
+                            input("Paciente agendado correctamente.. pulse Enter para continuar...")                         
+                            id= id+1
+                except Error as e:
+                        print(e) 
+                
             elif op == '0':
-                print("========Listar Pacientes========")
-                input('Presione enter para continuar...')
+                print("Usuario deslogeado... Correctamente...")
+                break
             
-else:
+elif log.startswith("2"):
         while True:
             print('''
             ===== Menu de opciones (Pacientes)=====
-            1. Listar Pacientes
+            1. Listar Medicos
             2. Listar Agendas
-            3. Añadir Paciente
-            4. Modificar Agenda
+            3. Costos de Atencion
+            4. Agendar una cita
             0. Salir    
                 ''')
             op = input('Ingrese seleccion:\n')
-
+            
             if op == '1':
+                print("======Listar Medicos=======")
                 input('Presione enter para continuar...')
+                try:
+                    with connect(
+                        host="localhost",
+                        user="root",
+                        password="asdf",
+                        database="mydb"
+                    ) as connection:
+                        print(connection)
+                        select = ('SELECT a.Per_id, a.Per_nombrecompleto, a.Per_rut, p.Medicos_usuario FROM personas a JOIN medicos p ON (a.Per_id = p.Medicos_id)')
+                        with connection.cursor() as cursor:
+                            cursor.execute(select)
+                            for row in cursor.fetchall():
+                                print("ID - Nombres - RUT - Usuario")
+                                print(row)
+                except Error as e:
+                                print(e)
+                                break     
+
+            elif op == '2':
+                print("========Listar Agendas========")
+                input('Presione enter para continuar...')
+                try:
+                    with connect(
+                        host="localhost",
+                        user="root",
+                        password="asdf",
+                        database="mydb"
+                    ) as connection:
+                        print(connection)
+                        select = ('SELECT * from agendas')
+                        with connection.cursor() as cursor:
+                            cursor.execute(select)
+                            print("//ID///Especialista////Paciente/////////Fecha//////Hora")
+                            for row in cursor.fetchall():
+                                print(row)
+                except Error as e:
+                                print(e)
+                                break
+            elif op == '3':
+                print("======Costos de atencion=======")
+                input('Presione enter para continuar...')
+                try:
+                    with connect(
+                        host="localhost",
+                        user="root",
+                        password="asdf",
+                        database="mydb"
+                    ) as connection:
+                        print(connection)
+                        select = ('SELECT valor_especialista, valor_precio FROM valores')
+                        with connection.cursor() as cursor:
+                            cursor.execute(select)
+                            for row in cursor.fetchall():
+                                print("Especialista ---- Precio")
+                                print(row)
+                except Error as e:
+                                print(e)
+                                break    
+                            
+            elif op == '4':
+                print("=======Agendar una cita========")
+                input('Presione enter para continuar...'),
+                id = 20
+                prof=input("ingrese Nombre de Especialista: ")
+                npac=(input("Ingrese su Nombre: "))
+                date=input("Ingrese la fecha: ")
+                hora=input("Ingrese la hora: ")
+                try:
+                    with connect(
+                        host="localhost",
+                        user="root",
+                        password="asdf",
+                        database="mydb"
+                    ) as connection:
+                        print(connection)
+                        agenda = (f"INSERT into agendas (Agend_id, Agend_especialista, Agend_paciente, Agend_fecha, Agend_hora) VALUES ({id},'{prof}','{npac}','{date}','{hora}');")
+                        with connection.cursor() as cursor:
+                            cursor.execute(agenda)
+                            connection.commit()
+                            cursor.close()
+                            connection.close()
+                            input("Paciente agendado correctamente.. pulse Enter para continuar...")                         
+                            id= id+1
+                except Error as e:
+                        print(e) 
+                        
+            elif op == '0':
+                print("Usuario deslogeado... Correctamente...")
+                break
+else:
+    print ("Usuario no registrado...")
         
 #db = DataBase(input("Ingrese nombre "),getpass("Ingrese Password "))
 #db.conectar()
