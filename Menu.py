@@ -30,6 +30,7 @@ if log.startswith("1"):
             2. Listar Agendas
             3. Añadir Usuario/Profesional
             4. Agendar Paciente
+            5. Borrar Paciente Agendado
             0. Salir    
                 ''')
             op = input('Ingrese seleccion:\n')
@@ -41,7 +42,7 @@ if log.startswith("1"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
@@ -61,7 +62,7 @@ if log.startswith("1"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
@@ -87,7 +88,7 @@ if log.startswith("1"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
@@ -117,7 +118,7 @@ if log.startswith("1"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
@@ -129,6 +130,29 @@ if log.startswith("1"):
                             connection.close()
                             input("Paciente agendado correctamente.. pulse Enter para continuar...")                         
                             id= id+1
+                except Error as e:
+                        print(e) 
+            
+            elif op == '5':
+                print("=======Eliminar Paciente Agendado========")
+                input('Presione enter para continuar...'),
+                id=input("Ingrese la ID de la agenda a eliminar\n")
+                try:
+                    with connect(
+                        host="localhost",
+                        user="root",
+                        password="tata1943",
+                        database="mydb"
+                    ) as connection:
+                        print(connection)
+                        agenda = (f"DELETE FROM agendas WHERE agend_id = {id}")
+                        with connection.cursor() as cursor:
+                            cursor.execute(agenda)
+                            connection.commit()
+                            cursor.close()
+                            connection.close()
+                            input("Paciente agendado ELMINADO correctamente.. pulse Enter para continuar...")                         
+            
                 except Error as e:
                         print(e) 
                 
@@ -155,7 +179,7 @@ elif log.startswith("2"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
@@ -176,7 +200,7 @@ elif log.startswith("2"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
@@ -196,15 +220,16 @@ elif log.startswith("2"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
                         select = ('SELECT valor_especialista, valor_precio FROM valores')
                         with connection.cursor() as cursor:
                             cursor.execute(select)
+                            print("Especialista ---- Precio")
                             for row in cursor.fetchall():
-                                print("Especialista ---- Precio")
+                               
                                 print(row)
                 except Error as e:
                                 print(e)
@@ -222,7 +247,7 @@ elif log.startswith("2"):
                     with connect(
                         host="localhost",
                         user="root",
-                        password="asdf",
+                        password="tata1943",
                         database="mydb"
                     ) as connection:
                         print(connection)
