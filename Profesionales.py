@@ -5,4 +5,7 @@ class Profesional(Personas):
         super().__init__(id,nombrecompleto, rut)
         self.usuario = usuario
         self.clave = clave
-        
+
+
+daniel = Profesional('1daniel','123fre',12,'Daniel Jofre','1800594-2')
+print(daniel.nombrecompleto)

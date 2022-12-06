@@ -22,7 +22,7 @@ Inicio=getpass("Bienvenido a Clinica Inacap... Presiona una tecla para continuar
 log = input("Ingrese usuario: ")
 pwd = getpass("Ingrese su contraseña: ")
 
-if log.startswith("1"):
+if log == ("1doctor1", "1doctor2", "1doctor3", "1doctor4","1doctor5"):
         while True:
             print('''
             ===== Menu de opciones (Medico)=====
@@ -160,7 +160,7 @@ if log.startswith("1"):
                 print("Usuario deslogeado... Correctamente...")
                 break
             
-elif log.startswith("2"):
+elif log == ("2paciente1", "2paciente1","2paciente3", "2paciente4", "2paciente5"):
         while True:
             print('''
             ===== Menu de opciones (Pacientes)=====
